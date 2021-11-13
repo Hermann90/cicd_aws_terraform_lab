@@ -21,7 +21,7 @@ resource "aws_codebuild_project" "tf-plan" {
         credential_provider = "SECRETS_MANAGER"
     }
  }
-    #allows to execute the terraform plan command, once our codes are updated on the master branch in github.
+    #Allows to execute the terraform plan command, once our codes are updated on the master branch in github.
  source {
      type   = "CODEPIPELINE"
      buildspec = file("buildspec/plan-buildspec.yml")
