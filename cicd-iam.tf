@@ -1,7 +1,6 @@
 resource "aws_iam_role" "tf-codepipeline-role" {
   name = "tf-codepipeline-role"
 
-# allow ability to run codepipeline
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -20,8 +19,6 @@ EOF
 
 }
 
-#pipeline needs also the ability to initiate the codstar connection to github, 
-# and its ability to write artifacts to S3.need to be able to write to cloudwatch
 data "aws_iam_policy_document" "tf-cicd-pipeline-policies" {
     statement{
         sid = ""
@@ -37,7 +34,6 @@ data "aws_iam_policy_document" "tf-cicd-pipeline-policies" {
     }
 }
 
-#so that code build has the ability to pass the spreading membership permissions over to terraform. so 
 resource "aws_iam_policy" "tf-cicd-pipeline-policy" {
     name = "tf-cicd-pipeline-policy"
     path = "/"
@@ -72,8 +68,6 @@ EOF
 
 }
 
-#code build role as well as some additional permissions for code build. 
-#terraform can do things like create and delete the resources write to cloudwatch and so on.
 data "aws_iam_policy_document" "tf-cicd-build-policies" {
     statement{
         sid = ""

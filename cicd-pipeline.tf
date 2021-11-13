@@ -1,4 +1,3 @@
-#this is the file that declares all the resources that terraform will build in aws.
 resource "aws_codebuild_project" "tf-plan" {
   name          = "tf-cicd-plan2"
   description   = "Plan stage for terraform"
@@ -8,9 +7,6 @@ resource "aws_codebuild_project" "tf-plan" {
     type = "CODEPIPELINE"
   }
 
-    #declaration of the version of the terraform atellecharger image in Git Hub. 
-    #we notice that we attribute the accesses and we specify the roles and credentials for this download.
-    #this content will be launched by a yml (plan-buildspec.yml) file
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "hashicorp/terraform:0.14.3"
@@ -21,7 +17,6 @@ resource "aws_codebuild_project" "tf-plan" {
         credential_provider = "SECRETS_MANAGER"
     }
  }
-    #Allows to execute the terraform plan command, once our codes are updated on the master branch in github.
  source {
      type   = "CODEPIPELINE"
      buildspec = file("buildspec/plan-buildspec.yml")
@@ -47,7 +42,6 @@ resource "aws_codebuild_project" "tf-apply" {
         credential_provider = "SECRETS_MANAGER"
     }
  }
-    #file allows to execute the terraform apply --auto-approve command once our codes are updated in the main branch.
  source {
      type   = "CODEPIPELINE"
      buildspec = file("buildspec/apply-buildspec.yml")
